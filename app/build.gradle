@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -59,10 +60,17 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //Dagger
-    implementation 'com.google.dagger:dagger:2.x'
-    kapt 'com.google.dagger:dagger-compiler:2.x'
-    api 'com.google.dagger:dagger-android-support:2.x' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.x'
+    implementation 'com.google.dagger:dagger:2.29.1'
+    kapt 'com.google.dagger:dagger-compiler:2.29.1'
+    api 'com.google.dagger:dagger-android-support:2.29.1' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.29.1'
+
+    //Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    implementation "androidx.activity:activity-ktx:1.1.0"
+
 
     //Easy permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
