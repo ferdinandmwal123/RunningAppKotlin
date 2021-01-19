@@ -1,5 +1,7 @@
 package com.mwalagho.ferdinand.runningapp.other
 
+import android.graphics.Color
+
 object Constants {
 
     const val RUNNING_DATABASE_NAME = "running_db"
@@ -13,5 +15,8 @@ object Constants {
     const val ACTION_SHOW_TRACKING_FRAGMENT = "ACTION_SHOW_TRACKING_FRAGMENT"
     const val LOCATION_UPDATE_INTERVAL = 5000L
     const val FASTEST_LOCATION_INTERVAL = 2000L
+    const val POLYLINE_COLOR = Color.RED
+    const val POLYLINE_WIDTH = 8F
+    const val MAP_ZOOM = 15F
 
 }
