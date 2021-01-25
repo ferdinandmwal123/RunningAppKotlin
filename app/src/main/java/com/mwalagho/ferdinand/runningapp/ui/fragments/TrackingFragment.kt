@@ -81,6 +81,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     private fun toggleRun(){
         if(isTracking){
+            menu?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
@@ -138,6 +139,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
         } else{
             btnToggleRun.text="Stop"
+            menu?.getItem(0)?.isVisible = true
             btnFinishRun.visibility = View.GONE
         }
     }
