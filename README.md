@@ -1,13 +1,13 @@
 # RunningAppKotlin
 
-This project was generated with [WhateverSoftware](https://blabla.com) 
+This project was written in [Kotlin](https://kotlinlang.org/) 
 
 ### Prerequisites
 
 What things you need to install the software and how to install them
 
 ```
-Give examples
+Android Studio
 ```
 
 # Development
