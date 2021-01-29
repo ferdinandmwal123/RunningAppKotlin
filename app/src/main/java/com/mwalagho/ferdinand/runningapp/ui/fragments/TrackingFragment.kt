@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mwalagho.ferdinand.runningapp.R
@@ -24,6 +25,7 @@ import com.mwalagho.ferdinand.runningapp.services.TrackingService
 import com.mwalagho.ferdinand.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
+import java.nio.file.Path
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
@@ -154,7 +156,16 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         }
     }
 
-    private fun addAllPolylines() {
+
+        private fun zoomToSeeWholeTrack(){
+            val bounds  = LatLngBounds.Builder()
+            for(polyline in pathPoints){
+                for(pos in polyline){
+                    bounds.include(pos)
+                }
+            }
+        }
+        private fun addAllPolylines() {
         for (polyline in pathPoints) {
             val polylineOptions = PolylineOptions()
                 .color(POLYLINE_COLOR)
