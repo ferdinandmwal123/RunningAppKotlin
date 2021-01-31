@@ -52,7 +52,7 @@ How to deploy app
 
 ## Built With
 
-* [SparkJava](http://sparkjava.com/) - The web framework used
+* [DaggerHilt](https://dagger.dev/hilt/) - The web framework used
 * [Gradle](https://gradle.org/) - Dependency Management
 * [CircleCi](https://circleci.com/) - Continuos integration tool
 
