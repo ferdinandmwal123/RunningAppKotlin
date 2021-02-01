@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.db.Run
 import com.mwalagho.ferdinand.runningapp.other.Constants.ACTION_PAUSE_SERVICE
@@ -59,6 +60,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         mapView.onCreate(savedInstanceState)
         btnToggleRun.setOnClickListener {
             toggleRun()
+        }
+        btnFinishRun.setOnClickListener {
+            zoomToSeeWholeTrack()
+            endRunAndSaveToDb()
         }
 
         mapView.getMapAsync {
@@ -201,6 +206,13 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
                 currentTimeInMillis,
                 caloriesBurned
             )
+            viewModel.insertRun(run)
+            Snackbar.make(
+                requireActivity().findViewById(R.id.rootView),
+                "Run saved successfully",
+                Snackbar.LENGTH_LONG
+            ).show()
+            stopRun()
 
         }
     }
