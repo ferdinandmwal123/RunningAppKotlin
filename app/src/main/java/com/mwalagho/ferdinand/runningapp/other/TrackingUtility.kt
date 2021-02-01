@@ -42,7 +42,9 @@ object TrackingUtility  {
                 result
 
             )
+            distance += result[0]
         }
+        return distance
     }
 
     fun getFormattedStopwatchTime(ms: Long, includeMillis: Boolean = false): String{

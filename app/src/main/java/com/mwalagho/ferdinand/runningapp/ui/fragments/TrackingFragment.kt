@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mwalagho.ferdinand.runningapp.R
+import com.mwalagho.ferdinand.runningapp.db.Run
 import com.mwalagho.ferdinand.runningapp.other.Constants.ACTION_PAUSE_SERVICE
 import com.mwalagho.ferdinand.runningapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.mwalagho.ferdinand.runningapp.other.Constants.ACTION_STOP_SERVICE
@@ -25,6 +26,8 @@ import com.mwalagho.ferdinand.runningapp.services.TrackingService
 import com.mwalagho.ferdinand.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
+import java.util.*
+import kotlin.math.round
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
@@ -39,6 +42,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     private var currentTimeInMillis = 0L
 
     private var menu: Menu? = null
+
+    private var weight = 80f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -177,9 +182,26 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         )
     }
 
-    private fun endRunAndSaveToDb(){
+    private fun endRunAndSaveToDb() {
         map?.snapshot { bmp ->
-                 
+            var distanceInMeters = 0
+            for (polyline in pathPoints) {
+                distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
+
+            }
+            val avgSpeed =
+                round((distanceInMeters / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+            val dateTimestamp = Calendar.getInstance().timeInMillis
+            val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
+            val run = Run(
+                bmp,
+                dateTimestamp,
+                avgSpeed,
+                distanceInMeters,
+                currentTimeInMillis,
+                caloriesBurned
+            )
+
         }
     }
 
