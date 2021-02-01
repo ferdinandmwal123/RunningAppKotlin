@@ -2,7 +2,10 @@ package com.mwalagho.ferdinand.runningapp.other
 
 import android.Manifest
 import android.content.Context
+import android.location.Location
 import android.os.Build
+import com.google.android.gms.maps.model.Polyline
+import com.mwalagho.ferdinand.runningapp.services.PolyLine
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.concurrent.TimeUnit
 
@@ -23,6 +26,24 @@ object TrackingUtility  {
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
             )
         }
+
+    fun calculatePolylineLength(polyline : PolyLine):Float{
+        var distance = 0F
+        for(i in 0..polyline.size -2){
+            val pos1 = polyline[i]
+            val pos2 = polyline[i + 1]
+
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+
+            )
+        }
+    }
 
     fun getFormattedStopwatchTime(ms: Long, includeMillis: Boolean = false): String{
         var milliSeconds = ms

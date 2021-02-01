@@ -25,7 +25,6 @@ import com.mwalagho.ferdinand.runningapp.services.TrackingService
 import com.mwalagho.ferdinand.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
-import java.nio.file.Path
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
@@ -65,7 +64,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         subscribeToObservers()
     }
 
-    private fun subscribeToObservers(){
+    private fun subscribeToObservers() {
         TrackingService.isTracking.observe(viewLifecycleOwner, Observer {
             updateTracking(it)
         })
@@ -76,13 +75,13 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         })
         TrackingService.timeRunInMillis.observe(viewLifecycleOwner, Observer {
             currentTimeInMillis = it
-            val formattedTime = TrackingUtility.getFormattedStopwatchTime(currentTimeInMillis,true)
+            val formattedTime = TrackingUtility.getFormattedStopwatchTime(currentTimeInMillis, true)
             tvTimer.text = formattedTime
         })
     }
 
-    private fun toggleRun(){
-        if(isTracking){
+    private fun toggleRun() {
+        if (isTracking) {
             menu?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else {
@@ -98,13 +97,13 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        if (currentTimeInMillis > 0L){
+        if (currentTimeInMillis > 0L) {
             this.menu?.getItem(0)?.isVisible = true
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.miCancelTracking -> {
                 showCancelTrackingDialog()
             }
@@ -112,15 +111,18 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showCancelTrackingDialog(){
-        val dialog = MaterialAlertDialogBuilder(requireContext(),R.style.ThemeOverlay_AppCompat_Dialog_Alert)
+    private fun showCancelTrackingDialog() {
+        val dialog = MaterialAlertDialogBuilder(
+            requireContext(),
+            R.style.ThemeOverlay_AppCompat_Dialog_Alert
+        )
             .setTitle("Cancel the run?")
             .setMessage("Are you sure?")
             .setIcon(R.drawable.ic_delete)
-            .setPositiveButton("Yes"){ _,_ ->
+            .setPositiveButton("Yes") { _, _ ->
                 stopRun()
             }
-            .setNegativeButton("No"){dialog, _ ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
 
             }
@@ -128,23 +130,24 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         dialog.show()
     }
 
-    private fun stopRun(){
+    private fun stopRun() {
         sendCommandToService(ACTION_STOP_SERVICE)
         findNavController().navigate(R.id.action_trackingFragment_to_runFragment)
     }
 
-    private fun updateTracking(isTracking : Boolean){
+    private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
-        if(!isTracking){
-            btnToggleRun.text="Start"
+        if (!isTracking) {
+            btnToggleRun.text = "Start"
             btnFinishRun.visibility = View.VISIBLE
 
-        } else{
-            btnToggleRun.text="Stop"
+        } else {
+            btnToggleRun.text = "Stop"
             menu?.getItem(0)?.isVisible = true
             btnFinishRun.visibility = View.GONE
         }
     }
+
     private fun moveCameraToUser() {
         if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
             map?.animateCamera(
@@ -157,15 +160,30 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     }
 
 
-        private fun zoomToSeeWholeTrack(){
-            val bounds  = LatLngBounds.Builder()
-            for(polyline in pathPoints){
-                for(pos in polyline){
-                    bounds.include(pos)
-                }
+    private fun zoomToSeeWholeTrack() {
+        val bounds = LatLngBounds.Builder()
+        for (polyline in pathPoints) {
+            for (pos in polyline) {
+                bounds.include(pos)
             }
         }
-        private fun addAllPolylines() {
+        map?.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds.build(),
+                mapView.width,
+                mapView.height,
+                (mapView.height * 0.05f).toInt()
+            )
+        )
+    }
+
+    private fun endRunAndSaveToDb(){
+        map?.snapshot { bmp ->
+                 
+        }
+    }
+
+    private fun addAllPolylines() {
         for (polyline in pathPoints) {
             val polylineOptions = PolylineOptions()
                 .color(POLYLINE_COLOR)
