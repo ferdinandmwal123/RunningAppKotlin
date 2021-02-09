@@ -1,36 +1,62 @@
 package com.mwalagho.ferdinand.runningapp.adapters
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.db.Run
+import kotlinx.android.synthetic.main.item_run.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
     //A nested class marked as inner can access the members of its outer class
-    inner class  RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    val difCallbacl = object : DiffUtil.ItemCallback<Run>{
+    val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Run, newItem: Run): Boolean {
-
+            return oldItem.hashCode() == newItem.hashCode()
         }
 
     }
 
+    val differ = AsyncListDiffer(this, diffCallback)
+
+    fun submitList(list: List<Run>) = differ.submitList(list)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunViewHolder {
-        TODO("Not yet implemented")
+        return RunViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_run,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val run = differ.currentList[position]
+        holder.itemView.apply {
+            Glide.with(this).load(run.img).into(ivRunImage)
+
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = run.timestamp
+            }
+            val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            tvDate.text = dateFormat.format(calendar.time)
+        }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        differ.currentList.size
     }
 }
