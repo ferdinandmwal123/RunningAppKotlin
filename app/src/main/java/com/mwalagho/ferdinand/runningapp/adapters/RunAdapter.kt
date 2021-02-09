@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.db.Run
+import com.mwalagho.ferdinand.runningapp.other.TrackingUtility
 import kotlinx.android.synthetic.main.item_run.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,10 +54,21 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
             }
             val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
             tvDate.text = dateFormat.format(calendar.time)
+
+            val avgSpeed = "${run.avgSpeedInKMH}km/h"
+            tvAvgSpeed.text = avgSpeed
+
+            val distanceInKm = "${run.distanceInMeters / 1000f}km"
+            tvDistance.text = distanceInKm
+
+            tvTime.text = TrackingUtility.getFormattedStopwatchTime(run.timeInMillis)
+
+            val caloriesBurned = "${run.caloriesBurned}kcal"
+            tvCalories.text = caloriesBurned
         }
     }
 
     override fun getItemCount(): Int {
-        differ.currentList.size
+        return differ.currentList.size
     }
 }
