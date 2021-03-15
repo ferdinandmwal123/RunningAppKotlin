@@ -2,9 +2,11 @@ package com.mwalagho.ferdinand.runningapp.di
 
 import android.app.Application
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import androidx.room.Room
 import com.mwalagho.ferdinand.runningapp.db.RunningDatabase
 import com.mwalagho.ferdinand.runningapp.other.Constants.RUNNING_DATABASE_NAME
+import com.mwalagho.ferdinand.runningapp.other.Constants.SHARED_PREFERENCES_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +35,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideSharedPreferences(@ApplicationContext app: Context)=
-        app.getSharedPreferences()
+        app.getSharedPreferences(SHARED_PREFERENCES_NAME,MODE_PRIVATE)
 }
