@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.other.Constants.KEY_NAME
 import com.mwalagho.ferdinand.runningapp.other.Constants.KEY_WEIGHT
@@ -22,6 +23,11 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
         btnApplyChanges.setOnClickListener {
             val success = applyChangesToSharedPref()
+            if (success) {
+                Snackbar.make(view, "Saved changes", Snackbar.LENGTH_LONG).show()
+            } else {
+                Snackbar.make(view, "Please fill all the fields", Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
