@@ -19,6 +19,8 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
     private fun loadFieldsFromSharedPref(){
         val name = sharedPreferences.getString(KEY_NAME,"")
         val weight = sharedPreferences.getFloat(KEY_WEIGHT,80f)
+        etName.setText(name)
+        etWeight.setText(weight.toString())
     }
     private fun applyChangesToSharedPref(): Boolean{
         val nameText = etName.text.toString()
