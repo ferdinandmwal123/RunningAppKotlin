@@ -1,6 +1,8 @@
 package com.mwalagho.ferdinand.runningapp.ui.fragments
 
 import android.content.SharedPreferences
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.other.Constants.KEY_NAME
@@ -15,6 +17,10 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     private fun loadFieldsFromSharedPref(){
         val name = sharedPreferences.getString(KEY_NAME,"")
