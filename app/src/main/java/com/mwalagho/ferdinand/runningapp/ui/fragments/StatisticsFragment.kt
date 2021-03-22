@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_statistics.*
 import kotlin.math.round
 
 @AndroidEntryPoint
-class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
+class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
     private val viewModel: StatisticsViewModel by viewModels()
 
@@ -29,6 +29,19 @@ class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
                 val totalDistanceString = "${totalDistance}km"
                 tvTotalDistance.text = totalDistanceString
 
+            }
+        })
+        viewModel.totalAvgSpeed.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val avgSpeed = round(it * 10f) / 10
+                val avgSpeedString = "${avgSpeed}km/h"
+                tvAverageSpeed.text = avgSpeedString
+            }
+        })
+        viewModel.totalCaloriesBurned.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val totalCalories = "${it}kcal"
+                tvTotalCalories.text = totalCalories
             }
         })
     }
