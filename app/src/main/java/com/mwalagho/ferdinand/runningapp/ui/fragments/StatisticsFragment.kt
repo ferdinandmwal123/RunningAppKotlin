@@ -1,10 +1,12 @@
 package com.mwalagho.ferdinand.runningapp.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.github.mikephil.charting.components.XAxis
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.other.TrackingUtility
 import com.mwalagho.ferdinand.runningapp.ui.viewmodels.StatisticsViewModel
@@ -20,6 +22,30 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
+    }
+
+    private fun setUpBarChart() {
+        barChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(false)
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        barChart.axisLeft.apply {
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        barChart.axisRight.apply {
+            axisLineColor = Color.WHITE
+            textColor = Color.WHITE
+            setDrawGridLines(false)
+        }
+        barChart.apply {
+            description.text = "Avg Speed over time"
+            legend.isEnabled = false
+        }
     }
 
     private fun subscribeToObservers() {
