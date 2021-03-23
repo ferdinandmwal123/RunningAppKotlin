@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.mwalagho.ferdinand.runningapp.R
@@ -89,6 +90,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     valueTextColor = Color.WHITE
                     color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
                 }
+                barChart.data = BarData(barDataSet)
+                barChart.invalidate()
             }
         })
     }
