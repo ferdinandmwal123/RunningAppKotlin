@@ -1,5 +1,7 @@
 package com.mwalagho.ferdinand.runningapp.ui.fragments
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,6 +17,11 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
     private val viewModel: StatisticsViewModel by viewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToObservers()
+    }
+
     private fun subscribeToObservers() {
         viewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -28,6 +35,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                 val totalDistance = round(km * 10f) / 10f
                 val totalDistanceString = "${totalDistance}km"
                 tvTotalDistance.text = totalDistanceString
+
 
             }
         })
