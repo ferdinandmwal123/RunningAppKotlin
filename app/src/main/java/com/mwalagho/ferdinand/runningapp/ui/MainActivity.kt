@@ -1,9 +1,9 @@
 package com.mwalagho.ferdinand.runningapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mwalagho.ferdinand.runningapp.R
@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
-
+        bottomNavigationView.setOnNavigationItemReselectedListener { /* NO-OP*/ }
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
-                when(destination.id){
+                when (destination.id) {
                     R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
                         bottomNavigationView.visibility = View.VISIBLE
                     else -> bottomNavigationView.visibility = View.GONE
