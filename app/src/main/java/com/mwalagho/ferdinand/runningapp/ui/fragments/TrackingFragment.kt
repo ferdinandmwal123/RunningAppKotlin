@@ -11,7 +11,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mwalagho.ferdinand.runningapp.R
 import com.mwalagho.ferdinand.runningapp.db.Run
@@ -124,22 +123,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     }
 
     private fun showCancelTrackingDialog() {
-        val dialog = MaterialAlertDialogBuilder(
-            requireContext(),
-            R.style.ThemeOverlay_AppCompat_Dialog_Alert
-        )
-            .setTitle("Cancel the run?")
-            .setMessage("Are you sure?")
-            .setIcon(R.drawable.ic_delete)
-            .setPositiveButton("Yes") { _, _ ->
-                stopRun()
-            }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
 
-            }
-            .create()
-        dialog.show()
     }
 
     private fun stopRun() {
